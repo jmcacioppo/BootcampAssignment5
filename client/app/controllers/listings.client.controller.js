@@ -74,6 +74,30 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
     };
 
     $scope.update = function(isValid) {
+      var id = $stateParams.listingId;
+
+      if (!isValid) {
+        $scope.$broadcast('show-errors-check-validity', 'articleForm');
+
+        return false;
+      }
+
+      /* Create the listing object */
+      var listing = {
+        name: $scope.listing.name, 
+        code: $scope.listing.code, 
+        address: $scope.listing.address
+      };
+
+      Listings.update(id, listing)
+              .then(function(response) {
+                //if the object is successfully saved redirect back to the list page
+                $state.go('listings.list', { successMessage: 'Listing succesfully updated!' });
+              }, function(error) {
+                //otherwise display the error
+                $scope.error = 'Unable to update listing!\n' + error;
+              });
+
       /*
         Fill in this function that should update a listing if the form is valid. Once the update has 
         successfully finished, navigate back to the 'listing.list' state using $state.go(). If an error 
@@ -82,6 +106,16 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
     };
 
     $scope.remove = function() {
+      var id = $stateParams.listingId;
+
+      Listings.delete(id)
+              .then(function(response) {
+                //if the object is successfully saved redirect back to the list page
+                $state.go('listings.list', { successMessage: 'Listing succesfully removed!' });
+              }, function(error) {
+                //otherwise display the error
+                $scope.error = 'Unable to remove listing!\n' + error;
+              });
       /*
         Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise, 
         display the error. 
@@ -101,5 +135,38 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
       }, 
       zoom: 14
     }
+
+    // Set marker values
+    var markers = [];
+    Listings.getAll().then(function(response) {
+      var listings = response.data;
+
+      listings.forEach( (listing, i) => {
+        if(listing.coordinates) {
+          var ret = {
+            latitude: listing.coordinates.latitude,
+            longitude: listing.coordinates.longitude,
+            title: {
+              code: listing.code,
+              name: listing.name,
+              address: listing.address
+            },
+            id: i,
+            show: false
+          }
+
+          markers.push(ret);
+        }
+      });      
+    });
+
+    $scope.markers = markers;
+
+    // Show fields of markers when clicked on
+    $scope.clickMarker = function(marker, eventName, model) {
+        console.log("Clicked!");
+        model.show = !model.show;
+    };
+
   }
 ]);

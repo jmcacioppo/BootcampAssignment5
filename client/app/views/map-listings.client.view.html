@@ -5,6 +5,26 @@
 
   Some useful documentation: 
     https://angular-ui.github.io/angular-google-maps/#!/api/google-map
+
     https://angular-ui.github.io/angular-google-maps/#!/api/markers
+
     https://angular-ui.github.io/angular-google-maps/#!/api/windows
   -->
+  <div class="row" ng-controller="ListingsController">
+  	<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+
+  		<ui-gmap-markers models="markers" coords="'self'" icon="'icon'" ng-click="clickMarker">
+
+  			<ui-gmap-windows show="show">
+                <div ng-non-bindable>
+                	<h4><b>{{title.name}}</b></h4>
+                	<p>Building Code: {{title.code}}</p>
+					<p>Address: {{title.address}}</p>
+				</div>
+
+            </ui-gmap-windows>
+
+        </ui-gmap-markers>
+
+  	</ui-gmap-google-map>
+  </div>
