@@ -4,7 +4,7 @@
 
 module.exports = {
   db: {
-    uri: process.env.URI || 'mongodb://jmcacioppo:bootcamp4@ds129344.mlab.com:29344/bootcamp4', //place the URI of your mongo database here.
+    uri: process.env.URI, //place the URI of your mongo database here.
   }, 
   googleMaps: {
     key: ''
