@@ -5,7 +5,11 @@
   "main": "server.js",
   "author": "Medhir Bhargava",
   "license": "MIT",
-  "dependencies": {
+  "scripts" : {
+	"start" : "node server.js",
+	"postinstall" : "bash ./post_install.sh"	
+},	 
+ "dependencies": {
     "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "mongoose": "^4.2.9",
