@@ -5,7 +5,7 @@
 #server/config/config.js
 
 # node 
-node_modules
+# node_modules
 
 # bower
 public
