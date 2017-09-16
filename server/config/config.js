@@ -4,10 +4,10 @@
 
 module.exports = {
   db: {
-    uri: 'mongodb://jmcacioppo:bootcamp4@ds129344.mlab.com:29344/bootcamp4', //place the URI of your mongo database here.
+    uri: process.env.URI || 'mongodb://jmcacioppo:bootcamp4@ds129344.mlab.com:29344/bootcamp4', //place the URI of your mongo database here.
   }, 
   googleMaps: {
-    key: 'AIzaSyBirIOtBQayM3OdXm9KIIxyy_PeG5ET8G8'
+    key: process.env.MAPS || 'AIzaSyBirIOtBQayM3OdXm9KIIxyy_PeG5ET8G8'
   },
   port: process.env.PORT || 8080
 };
